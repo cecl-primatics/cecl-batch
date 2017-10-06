@@ -125,7 +125,7 @@ public class LoanService implements ILoanService {
 		int numOfLines = 0;
 		int fileNum = 1;
 		int fileSize = 0;
-		BufferedWriter fos = new BufferedWriter(new FileWriter("C:/tmp/" + runName + "_" + fileNum + ".csv", true));
+		BufferedWriter fos = new BufferedWriter(new FileWriter("/tmp/" + runName + "_" + fileNum + ".csv", true));
 		fileNames.add(runName + "_" + fileNum + ".csv");
 		// if (fileNum == 1) {
 		// fos.write(loanLines+"\n");
@@ -137,7 +137,7 @@ public class LoanService implements ILoanService {
 				fileNum++;
 				fos.flush();
 				fos.close();
-				fos = new BufferedWriter(new FileWriter("C:/tmp/" + runName + "_" + fileNum + ".csv", true));
+				fos = new BufferedWriter(new FileWriter("/tmp/" + runName + "_" + fileNum + ".csv", true));
 				fileNames.add(runName + "_" + fileNum + ".csv");
 				// fos.append(loanLines);
 				fos.write(newLine + "\n");
