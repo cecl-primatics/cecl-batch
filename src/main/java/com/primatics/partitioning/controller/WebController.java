@@ -55,7 +55,7 @@ public class WebController {
 		logger.info("CLOCK ----- TimeElapsed ---- OVERALL "+timer.stop());
 		List<String> files = data.get(numOfLines);
 		for (String s : files) {
-		Path fileToDeletePath = Paths.get("C:/tmp/" + s);
+		Path fileToDeletePath = Paths.get("/tmp/" + s);
 		Files.delete(fileToDeletePath);
 		}
 		

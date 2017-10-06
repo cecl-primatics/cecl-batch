@@ -21,7 +21,7 @@ public class Reader {
 		
 		Stopwatch timer = Stopwatch.createStarted();
 		FlatFileItemReader<Loan> reader = new FlatFileItemReader<Loan>();
-		reader.setResource(new FileSystemResource("C:/tmp/"+path));
+		reader.setResource(new FileSystemResource("/tmp/"+path));
 		
 		DefaultLineMapper<Loan> lineMapper = new DefaultLineMapper<Loan>();
 		lineMapper.setLineTokenizer(new DelimitedLineTokenizer() {
