@@ -48,14 +48,16 @@ public class LoanService implements ILoanService {
 		
 		List<ParsedLoan> parsedLoans = new ArrayList<ParsedLoan>();
 		
+		int count = 0;
 		for (Loan l : loans) {
-
+			count++;
+			Integer k = count;
 			String s = l.getSurvival();
 			String lo = l.getLossRate();
 			String li = l.getLoanId();
 			Double b = l.getBalance();
 			
-			ParsedLoan parsedLoan  = new ParsedLoan(li, b, fromString(s),fromString(lo));
+			ParsedLoan parsedLoan  = new ParsedLoan(k, li, b, fromString(s),fromString(lo));
 			parsedLoans.add(parsedLoan);
 			
 		}

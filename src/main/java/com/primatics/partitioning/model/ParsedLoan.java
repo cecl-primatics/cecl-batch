@@ -1,10 +1,13 @@
 package com.primatics.partitioning.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "loans")
 public class ParsedLoan {
 	
+	@Id
+	private Integer key;
 	private String loanId;
 	private Double balance;
 	private Double[] survival;
@@ -19,6 +22,14 @@ public class ParsedLoan {
 
 	public void setLoanId(String loanId) {
 		this.loanId = loanId;
+	}
+	
+	public Integer getKey() {
+		return key;
+	}
+
+	public void setKey(Integer key) {
+		this.key = key;
 	}
 
 	public Double getBalance() {
@@ -47,12 +58,13 @@ public class ParsedLoan {
 
 	@Override
 	public String toString() {
-		return "Loan [loanId=" + loanId + ", balance=" + balance + ", survival=" + survival + ", lossRate=" + lossRate
+		return "Loan [key=" + key + ", loanId=" + loanId + ", balance=" + balance + ", survival=" + survival + ", lossRate=" + lossRate
 				+ "]";
 	}
 
-	public ParsedLoan(String loanId, Double balance, Double[] survival, Double[] lossRate) {
+	public ParsedLoan(Integer key, String loanId, Double balance, Double[] survival, Double[] lossRate) {
 		super();
+		this.key = key;
 		this.loanId = loanId;
 		this.balance = balance;
 		this.survival = survival;
