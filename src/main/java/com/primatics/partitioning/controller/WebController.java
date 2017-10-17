@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.base.Stopwatch;
 import com.primatics.partitioning.dao.LoanService;
 
 @RestController
@@ -36,7 +35,6 @@ public class WebController {
 	@GetMapping("/runjob/split/{name}")
 	public ResponseEntity<Integer> split(@PathVariable("name") String name) throws Exception {
 		Logger logger = LoggerFactory.getLogger(this.getClass());
-		Stopwatch timer = Stopwatch.createStarted();
 		Map<Integer, List<String>>  data = new HashMap<Integer, List<String>>();
 		Integer numOfLines = 0;
 		try {
@@ -49,7 +47,6 @@ public class WebController {
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
-		logger.info("CLOCK ----- TimeElapsed ---- OVERALL "+timer.stop());
 		List<String> files = data.get(numOfLines);
 		for (String s : files) {
 		Path fileToDeletePath = Paths.get("/tmp/" + s);

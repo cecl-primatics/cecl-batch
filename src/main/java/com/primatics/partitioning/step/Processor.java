@@ -18,7 +18,6 @@ public class Processor implements ItemProcessor<Loan, Loan> {
 
 		final Loan fixedLoan = new Loan(loanID, balance, survival, lossRate);
 
-		//log.info(threadName + " processing : " + "Converting (" + loan + ") into (" + fixedLoan + ")");
 		return fixedLoan;
 	}
 
