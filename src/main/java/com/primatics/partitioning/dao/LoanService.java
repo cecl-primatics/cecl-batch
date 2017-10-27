@@ -41,23 +41,32 @@ public class LoanService implements ILoanService {
 	@Autowired
 	GridFsTemplate gridFsTemplate;
 
-	public List<String> loanFiles;
+	List<String> loanFiles;
+	
+	public List<String> getLoanFiles() {
+		return loanFiles;
+	}
+
+	public void setLoanFiles(List<String> loanFiles) {
+		this.loanFiles = loanFiles;
+	}
 
 	public void insert(List<? extends Loan> loans) {
 		
 		List<ParsedLoan> parsedLoans = new ArrayList<ParsedLoan>();
 		
 		for (Loan l : loans) {
+			String sc = l.getScenario();
 			String s = l.getSurvival();
 			String lo = l.getLossRate();
 			String li = l.getLoanId();
 			Double b = l.getBalance();
 			
-			ParsedLoan parsedLoan  = new ParsedLoan(li, b, fromString(s),fromString(lo));
+			ParsedLoan parsedLoan  = new ParsedLoan(li, sc, b, fromString(s),fromString(lo));
 			parsedLoans.add(parsedLoan);
 			
 		}
-		mongoTemplate.insertAll(parsedLoans);
+		mongoTemplate.insert(parsedLoans, ParsedLoan.class);
 	}
 	
 	private static Double[] fromString(String string) {
@@ -112,7 +121,6 @@ public class LoanService implements ILoanService {
 	}
 
 	public Map<Integer, List<String>> splitFile(String runName) throws IOException {
-		Stopwatch timer = Stopwatch.createStarted();
 		List<String> fileNames = new ArrayList<String>();
 		GridFSDBFile gfs = getFile(runName);
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(gfs.getInputStream(), "UTF-8"));
@@ -149,15 +157,10 @@ public class LoanService implements ILoanService {
 		fos.flush();
 		fos.close();
 		bufferedReader.close();
-		loanFiles = fileNames;
+		setLoanFiles(fileNames);
 		Map<Integer, List<String>>  data = new HashMap<Integer, List<String>>();
 		data.put(numOfLines, fileNames);
-		logger.info("CLOCK ----- TimeElapsed ---- splitFile " + timer.stop());
 		return data;
-	}
-
-	public List<String> getFiles() {
-		return loanFiles;
 	}
 
 	@Override

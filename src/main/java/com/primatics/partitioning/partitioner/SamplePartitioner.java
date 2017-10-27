@@ -21,7 +21,7 @@ public class SamplePartitioner implements Partitioner{
 	@Override
 	public Map<String, ExecutionContext> partition(int gridSize) {
 		
-		int numSize = loanService.getFiles().size();
+		int numSize = loanService.getLoanFiles().size();
 		
 		Map<String, ExecutionContext> partitionData = new HashMap<String, ExecutionContext>();
 		
@@ -30,7 +30,7 @@ public class SamplePartitioner implements Partitioner{
 			ExecutionContext executionContext = new ExecutionContext();
 			
 			// give fileName for ExecutionContext
-			executionContext.putString("filename", loanService.getFiles().get(i));
+			executionContext.putString("filename", loanService.getLoanFiles().get(i));
 			// give a thread name for ExecutionContext
 			executionContext.putString("name", "Thread" + i);
 			

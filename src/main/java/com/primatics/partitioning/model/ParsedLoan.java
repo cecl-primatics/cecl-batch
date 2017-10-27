@@ -2,15 +2,14 @@ package com.primatics.partitioning.model;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "loans")
 public class ParsedLoan {
 	
 	private static final AtomicInteger count = new AtomicInteger(0); 
-	@Id
 	private Integer key;
+	private String scenario;
 	private String loanId;
 	private Double balance;
 	private Double[] survival;
@@ -19,6 +18,14 @@ public class ParsedLoan {
 	public ParsedLoan() {
 	}
 
+	public String getScenario() {
+		return scenario;
+	}
+
+	public void setScenario(String scenario) {
+		this.scenario = scenario;
+	}
+	
 	public String getLoanId() {
 		return loanId;
 	}
@@ -61,13 +68,14 @@ public class ParsedLoan {
 
 	@Override
 	public String toString() {
-		return "Loan [key=" + key + ", loanId=" + loanId + ", balance=" + balance + ", survival=" + survival + ", lossRate=" + lossRate
+		return "Loan [scenario=\" + scenario + \", key=" + key + ", loanId=" + loanId + ", balance=" + balance + ", survival=" + survival + ", lossRate=" + lossRate
 				+ "]";
 	}
 
-	public ParsedLoan(String loanId, Double balance, Double[] survival, Double[] lossRate) {
+	public ParsedLoan(String loanId, String scenario, Double balance, Double[] survival, Double[] lossRate) {
 		super();
 		this.key = count.incrementAndGet();
+		this.scenario = scenario;
 		this.loanId = loanId;
 		this.balance = balance;
 		this.survival = survival;

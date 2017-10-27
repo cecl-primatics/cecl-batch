@@ -2,12 +2,21 @@ package com.primatics.partitioning.model;
 
 public class Loan {
 	
+	private String scenario;
 	private String loanId;
 	private Double balance;
 	private String survival;
 	private String lossRate;
 
 	public Loan() {
+	}
+	
+	public String getScenario() {
+		return scenario;
+	}
+
+	public void setScenario(String scenario) {
+		this.scenario = scenario;
 	}
 
 	public String getLoanId() {
@@ -44,12 +53,13 @@ public class Loan {
 
 	@Override
 	public String toString() {
-		return "Loan [loanId=" + loanId + ", balance=" + balance + ", survival=" + survival + ", lossRate=" + lossRate
+		return "Loan [scenario=\" + scenario + \", loanId=" + loanId + ", balance=" + balance + ", survival=" + survival + ", lossRate=" + lossRate
 				+ "]";
 	}
 
-	public Loan(String loanId, Double balance, String survival, String lossRate) {
+	public Loan(String scenario, String loanId, Double balance, String survival, String lossRate) {
 		super();
+		this.scenario = scenario;
 		this.loanId = loanId;
 		this.balance = balance;
 		this.survival = survival;

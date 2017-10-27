@@ -40,10 +40,11 @@ public class WebController {
 		try {
 			data = loanService.splitFile(name);
 			numOfLines = data.keySet().iterator().next();
-			JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis()/1000)
-					.toJobParameters();
 			
+			JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis()/1000).addString("scenarioName", name)
+					.toJobParameters();
 			jobLauncher.run(job, jobParameters);
+			
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
