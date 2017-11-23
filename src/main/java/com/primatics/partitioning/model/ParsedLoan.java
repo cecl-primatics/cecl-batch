@@ -1,14 +1,20 @@
 package com.primatics.partitioning.model;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.text.CharacterPredicates;
+import org.apache.commons.text.RandomStringGenerator;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "loans")
 public class ParsedLoan {
 	
-	private static final AtomicInteger count = new AtomicInteger(0); 
-	private Integer key;
+	@Id
+	private String key;
 	private String scenario;
 	private String loanId;
 	private Double balance;
@@ -34,11 +40,11 @@ public class ParsedLoan {
 		this.loanId = loanId;
 	}
 	
-	public Integer getKey() {
+	public String getKey() {
 		return key;
 	}
 
-	public void setKey(Integer key) {
+	public void setKey(String key) {
 		this.key = key;
 	}
 
@@ -74,11 +80,20 @@ public class ParsedLoan {
 
 	public ParsedLoan(String loanId, String scenario, Double balance, Double[] survival, Double[] lossRate) {
 		super();
-		this.key = count.incrementAndGet();
+		this.key = generateUniqueId();
 		this.scenario = scenario;
 		this.loanId = loanId;
 		this.balance = balance;
 		this.survival = survival;
 		this.lossRate = lossRate;
 	}
+	
+ 	public static String generateUniqueId() {      
+ 		RandomStringGenerator randomStringGenerator =
+ 		        new RandomStringGenerator.Builder()
+ 		                .withinRange('0', 'z')
+ 		                .filteredBy(CharacterPredicates.LETTERS, CharacterPredicates.DIGITS)
+ 		                .build();
+ 		return randomStringGenerator.generate(12);
+    }
 }

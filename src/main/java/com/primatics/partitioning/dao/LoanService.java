@@ -81,10 +81,18 @@ public class LoanService implements ILoanService {
 	  }
 
 	public GridFSDBFile getFile(String name) {
+		System.out.println("*******In GRIDFS before template************"+name);
+		GridFSDBFile gfs = null;
 		Stopwatch timer = Stopwatch.createStarted();
 		Query query = new Query();
 		query.addCriteria(Criteria.where("metadata.run_name").is(name));
-		GridFSDBFile gfs = gridFsTemplate.findOne(query);
+		try {
+		 gfs = gridFsTemplate.findOne(query);
+		 System.out.println("*******In GRIDFS ************"+gfs.getFilename());
+		} catch (Exception e) {
+			System.out.println("*******In GRIDFS Exception************");
+			logger.info(e.getMessage());
+		}
 		logger.info("CLOCK ----- TimeElapsed ---- getFile " + timer.stop());
 		return gfs;
 	}
@@ -121,8 +129,11 @@ public class LoanService implements ILoanService {
 	}
 
 	public Map<Integer, List<String>> splitFile(String runName) throws IOException {
+		
+		System.out.println("*******In Split FILE************"+runName);
 		List<String> fileNames = new ArrayList<String>();
 		GridFSDBFile gfs = getFile(runName);
+		System.out.println("*******In GridFS************"+gfs.getFilename());
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(gfs.getInputStream(), "UTF-8"));
 		// String loanLines =
 		// "LoanID|Balance|Survival1|Survival2|Survival3|Survival4|Survival5|Survival6|Survival7|Survival8|Survival9|Survival10|Survival11|Survival12|Survival13|Survival14|Survival15|Survival16|LossRate1|LossRate2|LossRate3|LossRate4|LossRate5|LossRate6|LossRate7|LossRate8|LossRate9|LossRate10|LossRate11|LossRate12|LossRate13|LossRate14|LossRate15|LossRate16"+"\n";
@@ -160,6 +171,10 @@ public class LoanService implements ILoanService {
 		setLoanFiles(fileNames);
 		Map<Integer, List<String>>  data = new HashMap<Integer, List<String>>();
 		data.put(numOfLines, fileNames);
+		System.out.println("**************************************"+data.size());
+		for (Integer i : data.keySet()) {
+		System.out.println("**************************************"+data.get(i));
+		}
 		return data;
 	}
 

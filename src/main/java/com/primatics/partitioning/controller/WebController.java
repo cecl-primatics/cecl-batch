@@ -34,10 +34,13 @@ public class WebController {
 	
 	@GetMapping("/runjob/split/{name}")
 	public ResponseEntity<Integer> split(@PathVariable("name") String name) throws Exception {
+		
 		Logger logger = LoggerFactory.getLogger(this.getClass());
 		Map<Integer, List<String>>  data = new HashMap<Integer, List<String>>();
 		Integer numOfLines = 0;
+		System.out.println("*******In Split************"+name);
 		try {
+			System.out.println("*******In Try************");
 			data = loanService.splitFile(name);
 			numOfLines = data.keySet().iterator().next();
 			
@@ -46,6 +49,7 @@ public class WebController {
 			jobLauncher.run(job, jobParameters);
 			
 		} catch (Exception e) {
+			System.out.println("*******In Exception************");
 			logger.info(e.getMessage());
 		}
 		List<String> files = data.get(numOfLines);
