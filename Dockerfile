@@ -13,5 +13,5 @@ RUN alternatives --install /usr/bin/javac javac /usr/java/latest/bin/javac 20000
 EXPOSE 8083
 #install Spring Boot artifact
 VOLUME /tmp
-#ADD /maven/cecl-springbatch-service.jar cecl-springbatch-service.jar
+ADD /maven/cecl-springbatch-service.jar cecl-springbatch-service.jar
 ENTRYPOINT ["java", "-Dspring.data.mongodb.uri=mongodb://cecl:cecl@mongodb-32-centos7/loans", "-jar","/cecl-springbatch-service.jar"]
